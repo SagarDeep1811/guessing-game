@@ -1,7 +1,7 @@
 {
   "name": "guessinggame",
   "version": "0.1.0",
-  "homepage": "https://SagarDeep1811.github.io/",
+  "homepage": "https://SagarDeep1811.github.io/guessing-game",
   "private": false,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",

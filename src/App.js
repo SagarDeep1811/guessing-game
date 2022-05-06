@@ -15,7 +15,7 @@ const App = () => {
   const [symbol, setSymbol] = useState([`🟢`]);
   const [randNo, setRandNo] = useState(Math.trunc(Math.random() * 20 + 1));
   console.log(randNo);
-  //   ✅✔❎❌✔🟢🔴🟥🟩
+  //   ✅✔❎❌✔🟢🔴🟥🟩✅🔺🔻
 
   // guesses list -------------->
   const guessesList = guessesArray.map((guesses) => (
@@ -29,7 +29,7 @@ const App = () => {
   const symbolList = symbol
     .slice(1, timeArray.length)
     .map((sym) => <li key={sym.toString()}>{sym}</li>);
-  // ------------------------------------------------------
+  // checkTheNumber()------------------------------------------------------
   const checkTheNumber = () => {
     setTotal(total + 1);
     setGuessesArray((oldArray) => [
@@ -41,23 +41,23 @@ const App = () => {
     } else if (ans == randNo) {
       setWins(wins + 1);
       setAns("");
-      setResult(`YOU WIN ✅🥳`);
+      setResult(`YOU WIN 🥳`);
       restart();
       setSymbol((oldArray) => [...oldArray, "🟢"]);
     } else if (ans > randNo) {
-      setResult(`AMBIGUITY - TOO HIGH 💥🔺`);
+      setResult(`TOO HIGH 💥`);
     } else {
-      setResult(`AMBIGUITY - TOO LOW 💥🔻`);
+      setResult(`TOO LOW 💥`);
     }
   };
 
-  //   AMMEND--------------
+  //   clearTheField()--------------
   const clearTheField = () => {
     setAns("");
     console.log(guessesArray);
   };
 
-  //   RESTART----------------
+  //   restart()----------------
   const restart = () => {
     setAns("");
     if (ans != randNo) {
@@ -77,7 +77,14 @@ const App = () => {
     e.preventDefault();
     setAns(e.target.value);
   };
-
+  // handle key pressed -----------------------
+  const handleKeyPressed = (event) => {
+    console.log(event.key);
+    if (event.key === "Enter") {
+      checkTheNumber();
+    }
+  };
+  // -------------------------------------------
   return (
     <div className="mainContainer">
       <div className="nameOfTheGame">
@@ -93,14 +100,17 @@ const App = () => {
             <h3>GUESSES</h3>
           </span>
           <div className="trials">
-            <ul style={{ "list-style": "none" }}>{guessesList}</ul>
+            <ul style={{ "list-style": "none", color: "white" }}>
+              {guessesList}
+            </ul>
           </div>
           <span className="time-heading">
             <h3>TIME</h3>
           </span>
           <div className="time">
-            <ul style={{ "list-style": "none" }}>{timeList}</ul>
+            <ul style={{ "list-style": "none", color: "white" }}>{timeList}</ul>
           </div>
+          <span className="symbol-heading">{/* <h3>🟢/🔴</h3> */}</span>
           <div className="symbol">
             <ul style={{ "list-style": "none" }}>{symbolList}</ul>
           </div>
@@ -116,6 +126,7 @@ const App = () => {
             onChange={handleGuessedNumber}
             value={ans}
             id="guess"
+            onKeyPress={handleKeyPressed}
           ></input>
           <br></br>
           <button
@@ -161,3 +172,24 @@ const App = () => {
   );
 };
 export default App;
+
+// import React from 'react';
+
+// function Quiz(){
+// 	handleAnswerChange(event){
+// 		if(event.key === 'y'){
+// 			alert('The sky is your starting point!')
+// 	}
+// 		else if (event.key === 'n') {
+// 			alert('The sky is your limit👀')
+// 	}
+// }
+
+// 	return (
+// 		<div>
+// 				<p> Are You Smart?</p>
+// 					<input type="text" value={answer} onKeyPress={handleAnswerChange}/>
+// 				<small> Press Y for Yes or N for No</small>
+// 	</div>
+// )
+// }
